@@ -102,7 +102,7 @@ use crate::{
     random::{get_rng, random_seed, Prng, Rng, Seed},
 };
 use rand::distributions::uniform::SampleUniform;
-#[cfg(not(target_arch = "wasm32"))]
+#[cfg(feature = "multithread")]
 use rayon;
 use std::{fmt::Debug, marker::PhantomData};
 
@@ -149,7 +149,7 @@ where
 #[derive(Clone, Debug, PartialEq)]
 pub struct PopulationBuilder;
 
-#[cfg(not(target_arch = "wasm32"))]
+#[cfg(feature = "multithread")]
 impl PopulationBuilder {
     fn build_population<B, G>(genome_builder: &B, size: usize, mut rng: Prng) -> Population<G>
     where
@@ -181,7 +181,7 @@ impl PopulationBuilder {
     }
 }
 
-#[cfg(target_arch = "wasm32")]
+#[cfg(not(feature = "multithread"))]
 impl PopulationBuilder {
     fn build_population<B, G>(genome_builder: &B, size: usize, mut rng: Prng) -> Population<G>
     where

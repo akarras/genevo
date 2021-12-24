@@ -1,7 +1,6 @@
 # build output
 target/
 **/*.rs.bk
-Cargo.lock
 
 # Eclipse
 .project
